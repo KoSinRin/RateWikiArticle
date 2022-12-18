@@ -3,8 +3,6 @@ import json
 import re
 
 
-    
-    
 def getTextWikiArticle(topic):  
     contents = urllib.request.urlopen("https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&page="+topic).read().decode()
     parsed = json.loads(contents)
@@ -28,9 +26,21 @@ def getSentimentScore(topic):
     text = getTextWikiArticle(topic)
     counts = countWords(text)
     return calculateSentScore(counts)  
+
+# Код предлагает ввести тему, а затем вызовет функцию getSentimentScore, чтобы получить оценку тональности для этой темы. 
+# После, он напечатает оценку настроений.
+
+ if __name__ == '__main__':
+    topic = input("Enter a topic: ")
+    sentiment_score = getSentimentScore(topic)
+    print("Sentiment score for the topic '" + topic + "' is: " + str(sentiment_score))
     
+# Код для обработки исключений, которые могут возникнуть при вызове API или анализе ответа API.
 
-
-
-    
-# if name == 'main':
+if __name__ == '__main__':
+    try:
+        topic = input("Enter a topic: ")
+        sentiment_score = getSentimentScore(topic)
+        print("Sentiment score for the topic '" + topic + "' is: " + str(sentiment_score))
+    except Exception as e:
+        print("An error occurred:", e)
